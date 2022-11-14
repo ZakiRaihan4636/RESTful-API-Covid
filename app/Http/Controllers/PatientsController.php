@@ -20,7 +20,7 @@ class PatientsController extends Controller
 
         if ($patients) {
             $data = [
-                'message' => "Get all resouce patients",
+                'message' => "Get all Resource patients",
                 'data' => $patients
             ];
 
@@ -55,7 +55,7 @@ class PatientsController extends Controller
         $patients = Patient::create($input);
 
         $data = [
-            'message' => 'Patients is created successfully',
+            'message' => 'Resource is added successfully',
             'data' => $patients
         ];
 
@@ -72,7 +72,7 @@ class PatientsController extends Controller
 
         if ($patients) {
             $data = [
-                'message' => 'Get detail patients',
+                'message' => 'Get Detail Resource',
                 'data' => $patients
             ];
 
@@ -80,7 +80,7 @@ class PatientsController extends Controller
             return response()->json($data, 200);
         } else {
             $data = [
-                'message' => 'data is empty',
+                'message' => 'Resource not found',
             ];
 
             # mengembalikan data json status code 200
@@ -110,15 +110,15 @@ class PatientsController extends Controller
             $patients->update($input);
 
             $data = [
-                'message' => 'Resource patients updated',
+                'message' => 'Resource is update successfully',
                 'data' => $patients
             ];
 
             # mengirimkan respon json dengan statu code 200
             return response()->json($data, 200);
-        }else{
+        } else {
             $data = [
-                'message'=> 'Patients not found',
+                'message' => 'Resource not found',
             ];
 
             # mengembalikan data json status code 404
@@ -133,24 +133,55 @@ class PatientsController extends Controller
         # mencari data student yang ingin di update
         $patients = Patient::find($id);
 
-        if($patients){
+        if ($patients) {
             # menghapus data patient menggunakan eloquent delete
             $patients->delete();
 
             $data = [
-                'message' => 'Patients is deleted',
+                'message' => 'Resource delete is succsesfuly',
             ];
 
             # mengembalikan data json status code 200
             return response()->json($data, 200);
-
-        }else{
+        } else {
             $data = [
-                'message' => 'Patient not found',
+                'message' => 'Resource not found',
             ];
 
             # mengembalikan data json status code 404
             return response()->json($data, 404);
         }
+    }
+
+    # untuk mendapatkan resource berdasarkan name
+    # membuat method search 
+    public function search($name)
+    {
+        # mencari data patient berdasarkan nama
+        $patients = Patient::where('name', 'LIKE', "%$name")->get();
+
+        if ($patients) {
+            $data = [
+                'message' => 'Get searced resource',
+                'data' => $patients
+            ];
+
+            # mengambalikan data (json) dan kode 200
+            return response()->json($data, 200);
+        } else {
+            $data = [
+                'message' => 'Resource not found'
+            ];
+
+            # mengembalikan pesan dan kode 404
+            return response()->json($data, 404);
+        }
+    }
+
+    # untuk medapatkan resource berdasarkan status
+    # membuat method searchByStatus
+    public function searchByStatus($status)
+    {
+        
     }
 }
