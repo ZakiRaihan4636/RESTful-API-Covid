@@ -182,6 +182,5 @@ class PatientsController extends Controller
     # membuat method searchByStatus
     public function searchByStatus($status)
     {
-        
     }
 }
