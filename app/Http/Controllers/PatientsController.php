@@ -40,19 +40,17 @@ class PatientsController extends Controller
     # membuat method store
     public function store(Request $request)
     {
-
-
-        $input = [
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'status' => $request->status,
-            'in_date_at' => $request->in_date_at,
-            'out_date_at' => $request->out_date_at
-        ];
+        $validateData = $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'status' =>  'required',
+            'in_date_at' => 'date|required',
+            'out_date_at' => 'date|required'
+        ]);
 
         # menggunakan Patitent dengan eloquent create untuk insert data
-        $patients = Patient::create($input);
+        $patients = Patient::create($validateData);
 
         $data = [
             'message' => 'Resource is added successfully',
@@ -138,14 +136,14 @@ class PatientsController extends Controller
             $patients->delete();
 
             $data = [
-                'message' => 'Resource delete is succsesfuly',
+                'message' => "Resource delete $id is succsesfuly",
             ];
 
             # mengembalikan data json status code 200
             return response()->json($data, 200);
         } else {
             $data = [
-                'message' => 'Resource not found',
+                'message' => 'Resource not Found',
             ];
 
             # mengembalikan data json status code 404
@@ -157,23 +155,23 @@ class PatientsController extends Controller
     # membuat method search 
     public function search($name)
     {
-        # mencari data patient berdasarkan nama
-        $patients = Patient::where('name', 'LIKE', "%$name")->get();
+        # mencari data Patients berdasarkan name
+        $patients = Patient::where('name', 'LIKE', "%$name%")->get();
 
         if ($patients) {
             $data = [
-                'message' => 'Get searced resource',
+                'message' => 'Get Detail Searched Resource',
                 'data' => $patients
             ];
 
-            # mengambalikan data (json) dan kode 200
+            #mengembalikan data json status code 200
             return response()->json($data, 200);
         } else {
             $data = [
-                'message' => 'Resource not found'
+                'message' => 'Resource not found',
             ];
 
-            # mengembalikan pesan dan kode 404
+            # mengembalikan data json status code 200
             return response()->json($data, 404);
         }
     }
