@@ -19,13 +19,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+# Get detail resource
 Route::get('/patients', [PatientsController::class, 'index']);
 
+# create/add resource
 Route::post('/patients', [PatientsController::class, 'store']);
 
-Route::get('/patients/{name}', [PatientsController::class, 'search']);
+# update resource
+Route::put('/patients/{id}', [PatientsController::class, 'update']);
 
-Route::get('/patients/{id}', [PatientsController::class, 'show']);
-
-
+# destroy resource
 Route::delete('/patients/{id}', [PatientsController::class, 'destroy']);
+
+# get detail resource by name
+Route::get('/patients/search/{name}', [PatientsController::class, 'search']);
+
+# get detail resource by status
+Route::get('/patients/status/{status}', [PatientsController::class, 'searchByStatus']);
+
+# get detail resource by id
+Route::get('/patients/{id}', [PatientsController::class, 'show']);
