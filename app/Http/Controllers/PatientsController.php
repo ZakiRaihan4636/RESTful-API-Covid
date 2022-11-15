@@ -49,7 +49,7 @@ class PatientsController extends Controller
             'out_date_at' => 'date|required'
         ]);
 
-        # menggunakan Patitent dengan eloquent create untuk insert data
+        # menggunakan Patient dengan eloquent create untuk insert data
         $patients = Patient::create($validateData);
 
         $data = [
@@ -61,11 +61,11 @@ class PatientsController extends Controller
         return response()->json($data, 201);
     }
 
-    # mendapatkan detail resource student
+    # mendapatkan detail resource Patients
     # membuat method show 
     public function show($id)
     {
-        # mencari data student berdasarkan id
+        # mencari data patient berdasarkan id
         $patients = Patient::find($id);
 
         if ($patients) {
@@ -86,7 +86,7 @@ class PatientsController extends Controller
         }
     }
 
-    # mengupdate resource student
+    # mengupdate resource patient
     # membuat method update
     public function update(Request $request, $id)
     {
@@ -128,7 +128,7 @@ class PatientsController extends Controller
     # membuat method update
     public function destroy($id)
     {
-        # mencari data student yang ingin di update
+        # mencari data patient yang ingin di update
         $patients = Patient::find($id);
 
         if ($patients) {
@@ -158,7 +158,7 @@ class PatientsController extends Controller
         # mencari data Patients berdasarkan name
         $patients = Patient::where('name', 'LIKE', "%$name%")->get();
 
-        if ($patients) {
+        if (count($patients) > 0) {
             $data = [
                 'message' => 'Get Detail Searched Resource',
                 'data' => $patients
@@ -168,11 +168,11 @@ class PatientsController extends Controller
             return response()->json($data, 200);
         } else {
             $data = [
-                'message' => 'Resource not found',
+                'message' => 'Resource not found ',
             ];
 
             # mengembalikan data json status code 200
-            return response()->json($data, 404);
+            return response()->json($data, 200);
         }
     }
 
@@ -180,5 +180,25 @@ class PatientsController extends Controller
     # membuat method searchByStatus
     public function searchByStatus($status)
     {
+
+        # mencari patient berdasarkan status
+        $patients = Patient::where('status', 'LIKE', "%$status%")->get();
+
+        if ($patients) {
+            $data = [
+                'message' => "Resource detail status $status",
+                'data' => $patients
+            ];
+
+            #mengembalikan data json status code 200
+            return response()->json($data, 200);
+        } else {
+            $data = [
+                'message' => "Resource not found",
+            ];
+
+            #mengemablikan data json status code 200
+            return response()->json($data, 200);
+        }
     }
 }
