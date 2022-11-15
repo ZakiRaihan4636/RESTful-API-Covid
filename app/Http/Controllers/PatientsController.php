@@ -136,7 +136,7 @@ class PatientsController extends Controller
             $patients->delete();
 
             $data = [
-                'message' => "Resource delete $id is succsesfuly",
+                'message' => "Resource delete id $id is succsesfuly",
             ];
 
             # mengembalikan data json status code 200
