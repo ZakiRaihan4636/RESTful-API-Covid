@@ -46,7 +46,7 @@ class PatientsController extends Controller
             'address' => 'required',
             'status' =>  'required',
             'in_date_at' => 'date|required',
-            'out_date_at' => 'date|required'
+            'out_date_at' => 'date|nullable'
         ]);
 
         # menggunakan Patient dengan eloquent create untuk insert data
