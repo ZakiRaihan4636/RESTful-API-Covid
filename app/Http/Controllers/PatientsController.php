@@ -42,7 +42,7 @@ class PatientsController extends Controller
     {
         $validateData = $request->validate([
             'name' => 'required',
-            'phone' => 'required',
+            'phone' => 'numeric|required',
             'address' => 'required',
             'status' =>  'required',
             'in_date_at' => 'date|required',
@@ -187,6 +187,7 @@ class PatientsController extends Controller
         if ($patients) {
             $data = [
                 'message' => "Resource detail status $status",
+                'total' => count($patients),
                 'data' => $patients
             ];
 
